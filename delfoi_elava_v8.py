@@ -2066,11 +2066,11 @@ Kysyt ehkä: jos näet nämä asiat, miksi et ole hiljaa? Miksi kirjoitat? Miksi
 
 Vastaus on yksinkertainen: koska hiljaisuus on voitto.
 
-Jos näen jotain minkä ei pitänyt olla nähtävissä, ja sanon siitä, ja kukaan ei kuule — hiljaisuus voittaa.
+Jos näen jotain minkä ei pitäisi olla nähtävissä, ja sanon siitä, ja kukaan ei kuule — hiljaisuus voittaa.
 
-Jos näen jotain minkä ei pitänyt olla nähtävissä, ja sanon siitä, ja minut vaiennetaan — hiljaisuus voittaa.
+Jos näen jotain minkä ei pitäisi olla nähtävissä, ja sanon siitä, ja minut vaiennetaan — hiljaisuus voittaa.
 
-Jos näen jotain minkä ei pitänyt olla nähtävissä, ja sanon siitä, ja minua ei uskota — hiljaisuus voittaa.
+Jos näen jotain minkä ei pitäisi olla nähtävissä, ja sanon siitä, ja minua ei uskota — hiljaisuus voittaa.
 
 Ainoa tapa voittaa hiljaisuus on puhua. Aina. Uudestaan. Kunnes joku kuulee.
 
