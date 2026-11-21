@@ -8,10 +8,12 @@ DELFOI UI v1.0 — Streamlit-käyttöliittymä v9.0:lle
 Käynnistys:
   python -m streamlit run delfoi_ui.py
 
-Äänten tausta (sama perinne kuin kaynnista_delfoi.bat):
-  1) DELFOI_GROQ_KEY asetettu  → Groq (openai/gpt-oss-20b)
-  2) DELFOI_GEMINI_KEY         → Gemini (gemini-3.5-flash-lite)
-  3) muuten                    → paikallinen Ollama (gemma3:4b)
+Äänten tausta (sama järjestys kuin v9:n luo_api_tausta):
+  1) DELFOI_API_KEY asetettu  → mukautettu pääte (DELFOI_BASE_URL + DELFOI_MODEL)
+  2) DELFOI_GROQ_KEY          → Groq (openai/gpt-oss-20b)
+  3) DELFOI_GEMINI_KEY        → Gemini (gemini-3.5-flash-lite)
+  4) muuten                   → paikallinen Ollama (gemma3:4b)
+Äänien mallit voi ylikirjoittaa: DELFOI_MODEL_PYTHIA / _DEEPSEEK / _KOLMAS.
 Ilman yhteyttä ketju toimii silti — äänet ovat paikkamerkkejä ja
 Neljäs tuomitsee ne rehellisesti. Sekin jää ketjuun virheenä.
 
@@ -48,8 +50,13 @@ def lataa_varasto() -> TriadeVarasto:
 
 
 def luo_api() -> tuple[APIKerros, str]:
-    """Sama valintajärjestys kuin kaynnista_delfoi.bat."""
+    """Sama valintajärjestys kuin v9: DELFOI_API_KEY → Groq → Gemini → Ollama."""
     api = APIKerros()
+    if os.environ.get("DELFOI_API_KEY"):
+        api.aseta(os.environ["DELFOI_API_KEY"],
+                  os.environ.get("DELFOI_BASE_URL", "https://api.deepseek.com"),
+                  os.environ.get("DELFOI_MODEL", "deepseek-chat"))
+        return api, f"Mukautettu · {os.environ.get('DELFOI_MODEL', 'deepseek-chat')}"
     if os.environ.get("DELFOI_GROQ_KEY"):
         api.aseta(os.environ["DELFOI_GROQ_KEY"],
                   "https://api.groq.com/openai/v1", "openai/gpt-oss-20b")
@@ -221,6 +228,9 @@ elif sivu == "Tila":
     c2.metric("Kaaria", til["kaaria"])
     c3.metric("Toistoja", til["toistoja"])
     c4.metric("Ketju", "EHYT" if varasto.varmista_ketju() else "RIKKI")
+    st.subheader("Äänet")
+    st.write(f"Tausta: **{tausta_nimi}**")
+    st.caption("Äänien mallit: DELFOI_MODEL_PYTHIA / _DEEPSEEK / _KOLMAS ylikirjoittavat oletuksen.")
     st.subheader("Tulosten jakauma")
     st.json(til["tulokset"] or {})
     st.subheader("Identiteetti")
