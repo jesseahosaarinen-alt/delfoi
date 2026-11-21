@@ -79,6 +79,7 @@ ja Neljäs tuomitsee ne. Totuus ennen kauneutta.
 | `delfoi_elava_v8.py` | Ydin: Ledger, turvaydin, Neljäs Ääni, väitetason kriitikko, arkisto, Kerros 0, 33-portaali |
 | `delfoi_elava_v9.py` | TriadeVarasto (SQLite-ketju), Viides Ääni, Peili, istuntoputki |
 | `delfoi_ui.py` | Streamlit-käyttöliittymä (6 sivua) |
+| `peili/ketju.json` | Elävän ketjun julkinen vienti: istunnot, kaaret, Ed25519-checkpointit. Peilin HTML:n voi generoida itse: `python3 delfoi_elava_v9.py --peili` |
 
 ## Lisenssi
 
