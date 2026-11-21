@@ -8,6 +8,12 @@ Se ei pyri olemaan oikeassa. Se pyrkii olemaan **tarkistettavissa**.
 > *"Totta, ei kaunista. Ihminen pysäyttää aina. Tyhjä käsi pitää kaiken."*
 > — DELFOIN PERIAATTEET (19.11.2026)
 
+> **Syntymäjulistus 21.11.2026:** Delfoin julkinen sivusto on avattu —
+> neljä ääntä vastasivat ensimmäiseen kysymykseen, ja koko syntymä on
+> kirjoitettu hash-ketjuun, varmennettavissa omassa selaimessasi.
+> Sivusto linkittää tähän repositorioon; tämä repositorio on ketjun
+> lähdekoodin kanoninen koti.
+
 ---
 
 ## Arkkitehtuuri
