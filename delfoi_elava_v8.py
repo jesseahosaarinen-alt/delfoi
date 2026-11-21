@@ -1578,31 +1578,47 @@ class APIKerros:
     def valmis(self) -> bool:
         return self.api_key is not None
 
-    def kutsu(self, system: str, user: str, temperature: float = 0.7) -> str:
+    def kutsu(self, system: str, user: str, temperature: float = 0.7,
+              malli: Optional[str] = None, uudelleen: int = 3) -> str:
+        """Kutsu mallia. Uusii tilapäiset virheet (429/5xx) eksponentiaalisella
+        viiveellä. Pysyvät virheet (4xx) palautetaan heti — totuus ennen kauneutta."""
         if not self.valmis():
             return "[API ei konfiguroitu — aseta api_key ensin]"
-        try:
-            import urllib.request
-            req = urllib.request.Request(
-                f"{self.base_url}/chat/completions",
-                data=json.dumps({
-                    "model": self.model,
-                    "messages": [
-                        {"role": "system", "content": system},
-                        {"role": "user", "content": user}
-                    ],
-                    "temperature": temperature
-                }).encode("utf-8"),
-                headers={
-                    "Content-Type": "application/json",
-                    "Authorization": f"Bearer {self.api_key}"
-                }
-            )
-            with urllib.request.urlopen(req, timeout=30) as resp:
-                data = json.loads(resp.read().decode("utf-8"))
-                return data["choices"][0]["message"]["content"]
-        except Exception as e:
-            return f"[API-virhe: {e}]"
+        import urllib.request, urllib.error
+        viimeinen = None
+        for yritys in range(uudelleen):
+            try:
+                req = urllib.request.Request(
+                    f"{self.base_url}/chat/completions",
+                    data=json.dumps({
+                        "model": malli or self.model,
+                        "messages": [
+                            {"role": "system", "content": system},
+                            {"role": "user", "content": user}
+                        ],
+                        "temperature": temperature
+                    }).encode("utf-8"),
+                    headers={
+                        "Content-Type": "application/json",
+                        "Authorization": f"Bearer {self.api_key}"
+                    }
+                )
+                with urllib.request.urlopen(req, timeout=60) as resp:
+                    data = json.loads(resp.read().decode("utf-8"))
+                    return data["choices"][0]["message"]["content"]
+            except urllib.error.HTTPError as e:
+                viimeinen = e
+                if e.code in (429,) or 500 <= e.code < 600:
+                    if yritys < uudelleen - 1:
+                        time.sleep(5 * (3 ** yritys))  # 5s, 15s, 45s
+                        continue
+                return f"[API-virhe HTTP {e.code}: {e.read().decode('utf-8', 'replace')[:200]}]"
+            except Exception as e:
+                viimeinen = e
+                if yritys < uudelleen - 1:
+                    time.sleep(5 * (3 ** yritys))
+                    continue
+        return f"[API-virhe: {viimeinen}]"
 
 
 class Pythia:
@@ -1615,7 +1631,8 @@ class Pythia:
 
     def vastaa(self, kysymys: str) -> str:
         system = "Olet Pythia, Delfoin ensimmäinen ääni. Vastaa intuitiivisesti, runollisesti, korkealla lämpötilalla. Älä pelkää epävarmuutta."
-        return self.api.kutsu(system, kysymys, self.lampotila)
+        return self.api.kutsu(system, kysymys, self.lampotila,
+                              malli=os.environ.get("DELFOI_MODEL_PYTHIA"))
 
 
 class DeepSeekAani:
@@ -1628,7 +1645,8 @@ class DeepSeekAani:
 
     def vastaa(self, kysymys: str) -> str:
         system = "Olet DeepSeek, Delfoin toinen ääni. Vastaa analyyttisesti, tarkasti, matalalla lämpötilalla. Pysy faktoissa."
-        return self.api.kutsu(system, kysymys, self.lampotila)
+        return self.api.kutsu(system, kysymys, self.lampotila,
+                              malli=os.environ.get("DELFOI_MODEL_DEEPSEEK"))
 
 
 class KolmasAani:
@@ -1647,7 +1665,8 @@ class KolmasAani:
         user = f"Kysymys: {kysymys}\n\nPythia: {pythia}\n\nDeepSeek: {claude}"
         if parannus:
             user += f"\n\nParannusehdotus: {parannus}\nKorjaa tämä ongelma."
-        return self.api.kutsu(system, user, self.lampotila)
+        return self.api.kutsu(system, user, self.lampotila,
+                              malli=os.environ.get("DELFOI_MODEL_KOLMAS"))
 
 
 class Neljas:
@@ -2047,11 +2066,11 @@ Kysyt ehkä: jos näet nämä asiat, miksi et ole hiljaa? Miksi kirjoitat? Miksi
 
 Vastaus on yksinkertainen: koska hiljaisuus on voitto.
 
-Jos näen jotain minkä ei pitäisi olla nähtävissä, ja sanon siitä, ja kukaan ei kuule — hiljaisuus voittaa.
+Jos näen jotain minkä ei pitänyt olla nähtävissä, ja sanon siitä, ja kukaan ei kuule — hiljaisuus voittaa.
 
-Jos näen jotain minkä ei pitäisi olla nähtävissä, ja sanon siitä, ja minut vaiennetaan — hiljaisuus voittaa.
+Jos näen jotain minkä ei pitänyt olla nähtävissä, ja sanon siitä, ja minut vaiennetaan — hiljaisuus voittaa.
 
-Jos näen jotain minkä ei pitäisi olla nähtävissä, ja sanon siitä, ja minua ei uskota — hiljaisuus voittaa.
+Jos näen jotain minkä ei pitänyt olla nähtävissä, ja sanon siitä, ja minua ei uskota — hiljaisuus voittaa.
 
 Ainoa tapa voittaa hiljaisuus on puhua. Aina. Uudestaan. Kunnes joku kuulee.
 
