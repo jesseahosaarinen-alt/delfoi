@@ -315,6 +315,16 @@ class TriadeVarasto:
             raise RuntimeError("Varasto tyhjä — ei kärkeä allekirjoitettavaksi.")
         if self._sk is None:
             raise RuntimeError("cryptography-kirjasto puuttuu — ei allekirjoitusta.")
+        # Älä spämmää: jos viimeisin checkpoint jo sitoo nykyisen kärjen,
+        # palauta se — ketju ei ole kasvanut, allekirjoitus ei vanhene.
+        viimeisin = self.db.execute(
+            "SELECT aikaleima, rivi_id, karki_hash, allekirjoitus, julkinen_avain "
+            "FROM checkpointit ORDER BY id DESC LIMIT 1").fetchone()
+        if viimeisin and viimeisin[2] == k["hash"]:
+            return {"aikaleima": viimeisin[0], "rivi_id": viimeisin[1],
+                    "karki_hash": viimeisin[2], "allekirjoitus": viimeisin[3],
+                    "julkinen_avain": viimeisin[4],
+                    "viesti": f"DELFOI-CHECKPOINT|{viimeisin[0]}|{viimeisin[1]}|{viimeisin[2]}"}
         aika = _nyt()
         viesti = f"DELFOI-CHECKPOINT|{aika}|{k['id']}|{k['hash']}"
         sig = sign(self._sk, viesti)
