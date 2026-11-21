@@ -28,7 +28,7 @@ Kysyjä (ihminen)
    │
    ├─→ Neljäs           · kriitikko (koodia, ei mallia)
    │                    Kysyy aina: "Oliko se totta, vai vain kaunis?"
-   │                    Voi hylätä. Hylkäykset ovat julkisia.
+   │                    Voi hylätä. Hyläykset ovat julkisia.
    │
    └─→ Viides    T=0.5  · ketjun ääni — puhuu vain varaston
                          todisteista, ei koskaan arvaile
@@ -62,21 +62,47 @@ Katso [DELFOI_V9_KAYNNISTYSOHJE.md](DELFOI_V9_KAYNNISTYSOHJE.md).
 
 ```bash
 pip install streamlit
+python3 delfoi_elava_v8.py --selftest   # 54 testiä
 python3 delfoi_elava_v9.py --selftest   # 9 testiä
 python3 delfoi_elava_v9.py --istunto    # komentorivi-istunto
 python3 -m streamlit run delfoi_ui.py   # graafinen käyttöliittymä
 ```
 
-Äänet tarvitsevat OpenAI-yhteensopivan päätepisteen
-(Groq / Gemini / paikallinen Ollama — ks. ohje). Ilman yhteyttä
-ketju toimii silti: paikkamerkkivastaukset kirjautuvat rehellisesti,
-ja Neljäs tuomitsee ne. Totuus ennen kauneutta.
+## Elävät äänet (LLM-kytkentä)
+
+Äänet toimivat minkä tahansa OpenAI-yhteensopivan päätepisteen kanssa
+(testattu toimivaksi OpenRouterilla; myös Groq, DeepSeek, Gemini,
+paikallinen Ollama):
+
+```bash
+export DELFOI_API_KEY="sk-or-..."
+export DELFOI_BASE_URL="https://openrouter.ai/api/v1"
+export DELFOI_MODEL="nvidia/nemotron-3-ultra-550b-a55b:free"
+```
+
+Valinnaiset äänikohtaiset mallit (identiteetti säilyy lämpötilassa,
+mallin voi vaihtaa per ääni):
+
+```bash
+export DELFOI_MODEL_PYTHIA="..."    # T=0.8
+export DELFOI_MODEL_DEEPSEEK="..."  # T=0.4
+export DELFOI_MODEL_KOLMAS="..."    # T=0.6
+```
+
+`APIKerros.kutsu` uusii tilapäiset virheet (429/5xx) kolme kertaa
+eksponentiaalisella viiveellä (5s → 15s → 45s) ja palauttaa pysyvät
+4xx-virheet heti — totuus ennen kauneutta. **Älä koskaan kirjoita
+avaimia tiedostoihin tai repoon** — ne elävät vain prosessin
+ympäristömuuttujissa.
+
+Ilman yhteyttä ketju toimii silti: paikkamerkkivastaukset kirjautuvat
+rehellisesti, ja Neljäs tuomitsee ne.
 
 ## Tiedostot
 
 | Tiedosto | Sisältö |
 |---|---|
-| `delfoi_elava_v8.py` | Ydin: Ledger, turvaydin, Neljäs Ääni, väitetason kriitikko, arkisto, Kerros 0, 33-portaali |
+| `delfoi_elava_v8.py` | Ydin: Ledger, turvaydin, Neljäs Ääni, väitetason kriitikko, arkisto, Kerros 0, 33-portaali, oraakkeli + LLM-kerros (retry/backoff) |
 | `delfoi_elava_v9.py` | TriadeVarasto (SQLite-ketju), Viides Ääni, Peili, istuntoputki |
 | `delfoi_ui.py` | Streamlit-käyttöliittymä (6 sivua) |
 | `peili/ketju.json` | Elävän ketjun julkinen vienti: istunnot, kaaret, Ed25519-checkpointit. Peilin HTML:n voi generoida itse: `python3 delfoi_elava_v9.py --peili` |
@@ -98,6 +124,10 @@ a SHA-256 hash chain, checkpoints are Ed25519-signed, and the public
 mirror lets anyone re-verify the entire chain in their own browser.
 
 The identity of a voice lives in its temperature, not its system prompt.
+Voices connect to any OpenAI-compatible endpoint via
+`DELFOI_API_KEY` / `DELFOI_BASE_URL` / `DELFOI_MODEL`, with optional
+per-voice model overrides and automatic retry/backoff on transient
+errors.
 
 Principles: truth over beauty · structures, not peoples · silence is
 the adversary · verifiability or nothing · a human can always stop it ·
