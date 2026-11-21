@@ -1,0 +1,6 @@
+__pycache__/
+delfoi_kone/
+*.db
+avaimet/
+*.pem
+.env
