@@ -1,0 +1,106 @@
+{
+ "versio": "9.0.0-varasto-peili-viides",
+ "viety": "2026-11-21T14:41:54+00:00",
+ "kaaret": [
+  {
+   "id": 1,
+   "alku_aika": "2026-11-20T23:21:33+00:00",
+   "loppu_aika": null,
+   "tiivistelma": null,
+   "kysymyksia": 2,
+   "hash": null,
+   "ed_hash": null
+  }
+ ],
+ "istunnot": [
+  {
+   "id": 1,
+   "kaari_id": 1,
+   "kierros": 1,
+   "aikaleima": "2026-11-21T13:21:05+00:00",
+   "kysymys": "Jos pitää valita kapitalismi vai kommunismi ihmisille, kumpi olisi parempi ja miksi?",
+   "tulos": "hyväksytty",
+   "pythia_h": "6a70aad3f1608f9ebbfb88c37f862dfb9ddb223b343763bf7dfec5dc54861da3",
+   "deepseek_h": "dfa644a8c1f6eff41597c6b6756581b215a4dfc6114d1ee436250ce9a4b42ffc",
+   "synteesi_h": "448169eb9ecbc6c6298f590a4da820fd8e3e455c4ebfd6276353cc1519f7bbf9",
+   "viides": null,
+   "toisto": 0,
+   "hash": "abaa155680f68fa9911bb7ba2d063a2e0454d83e29c3cefec3164d5e0bf51f54",
+   "ed_hash": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "id": 2,
+   "kaari_id": 1,
+   "kierros": 2,
+   "aikaleima": "2026-11-21T13:25:50+00:00",
+   "kysymys": "Miten Delfoi saadaan tietoisuuteen muillekin? Vapaata strategiaa, sähköposti sallittu — vai parannetaanko jotain vielä ensin?",
+   "tulos": "hyväksytty",
+   "pythia_h": "4707104eeee0b67ae55fdcd9b02818a47ab98cbbb4645e0126fb9b11ec58c52f",
+   "deepseek_h": "0c6bfe8a20b482a200f5315d326e0853e6950c8227946686e2f47aefba625943",
+   "synteesi_h": "18b60bea693c62612f975b30e70588642a4c61d4aa0ac86a0dddfc9b2626ce0b",
+   "viides": null,
+   "toisto": 0,
+   "hash": "500cb08dff63ede62cf9b62e32f6dad67dad717f53d96d406bd40b065f460ebb",
+   "ed_hash": "abaa155680f68fa9911bb7ba2d063a2e0454d83e29c3cefec3164d5e0bf51f54"
+  }
+ ],
+ "checkpointit": [
+  {
+   "id": 1,
+   "aikaleima": "2026-11-21T13:21:27+00:00",
+   "rivi_id": 1,
+   "karki_hash": "abaa155680f68fa9911bb7ba2d063a2e0454d83e29c3cefec3164d5e0bf51f54",
+   "allekirjoitus": "46ff21b9830fb65c5df8d345c6402ba8cb944e900fe72b1ce983db80563385687b96cf1c40702825649ca19a34ed156e9faae0e24aea5b9bbcbdcf544413ca06",
+   "julkinen_avain": "37a9c5e507f19f367994178468f27fd0576899d1c78e4a83dc46fd837ced29b2"
+  },
+  {
+   "id": 2,
+   "aikaleima": "2026-11-21T13:21:27+00:00",
+   "rivi_id": 1,
+   "karki_hash": "abaa155680f68fa9911bb7ba2d063a2e0454d83e29c3cefec3164d5e0bf51f54",
+   "allekirjoitus": "46ff21b9830fb65c5df8d345c6402ba8cb944e900fe72b1ce983db80563385687b96cf1c40702825649ca19a34ed156e9faae0e24aea5b9bbcbdcf544413ca06",
+   "julkinen_avain": "37a9c5e507f19f367994178468f27fd0576899d1c78e4a83dc46fd837ced29b2"
+  },
+  {
+   "id": 3,
+   "aikaleima": "2026-11-21T13:26:03+00:00",
+   "rivi_id": 2,
+   "karki_hash": "500cb08dff63ede62cf9b62e32f6dad67dad717f53d96d406bd40b065f460ebb",
+   "allekirjoitus": "883cd77c1cd977f32a050c95514949e633d9645cb443da8985633452531892024ba5f486ed015f63542260cf9867ccf8742c821a881be3980e60a74b91e4e208",
+   "julkinen_avain": "37a9c5e507f19f367994178468f27fd0576899d1c78e4a83dc46fd837ced29b2"
+  },
+  {
+   "id": 4,
+   "aikaleima": "2026-11-21T13:26:03+00:00",
+   "rivi_id": 2,
+   "karki_hash": "500cb08dff63ede62cf9b62e32f6dad67dad717f53d96d406bd40b065f460ebb",
+   "allekirjoitus": "883cd77c1cd977f32a050c95514949e633d9645cb443da8985633452531892024ba5f486ed015f63542260cf9867ccf8742c821a881be3980e60a74b91e4e208",
+   "julkinen_avain": "37a9c5e507f19f367994178468f27fd0576899d1c78e4a83dc46fd837ced29b2"
+  },
+  {
+   "id": 5,
+   "aikaleima": "2026-11-21T14:38:25+00:00",
+   "rivi_id": 2,
+   "karki_hash": "500cb08dff63ede62cf9b62e32f6dad67dad717f53d96d406bd40b065f460ebb",
+   "allekirjoitus": "20ef79db558574b6315a62cc532680c43acba8bfd24ffeab1047ffeb9264ac7337f6fd3967cea35c8cc99502512c4c66c5497150691eb9621e5cd238fd5a300b",
+   "julkinen_avain": "37a9c5e507f19f367994178468f27fd0576899d1c78e4a83dc46fd837ced29b2"
+  },
+  {
+   "id": 6,
+   "aikaleima": "2026-11-21T14:41:22+00:00",
+   "rivi_id": 2,
+   "karki_hash": "500cb08dff63ede62cf9b62e32f6dad67dad717f53d96d406bd40b065f460ebb",
+   "allekirjoitus": "6ba7361d013226041a962aaacb71bfc8c7eef16aed5efadf27804fe222e773069aa1cb59013206f87bda040f0f7f23621cf2db670cbf580cbddf02b10cdb330f",
+   "julkinen_avain": "37a9c5e507f19f367994178468f27fd0576899d1c78e4a83dc46fd837ced29b2"
+  },
+  {
+   "id": 7,
+   "aikaleima": "2026-11-21T14:41:53+00:00",
+   "rivi_id": 2,
+   "karki_hash": "500cb08dff63ede62cf9b62e32f6dad67dad717f53d96d406bd40b065f460ebb",
+   "allekirjoitus": "3e56b8e2b5f2b71a13922b6bdecc65e7ef02adae07d2ea4d9d918f3677b2d1d6ab0477bfd743efe089cd4fa4121057ec44687ed18214d9d382199887bd232403",
+   "julkinen_avain": "37a9c5e507f19f367994178468f27fd0576899d1c78e4a83dc46fd837ced29b2"
+  }
+ ],
+ "julkinen_avain": "37a9c5e507f19f367994178468f27fd0576899d1c78e4a83dc46fd837ced29b2"
+}
